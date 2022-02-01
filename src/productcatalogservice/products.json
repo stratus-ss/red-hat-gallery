@@ -2,9 +2,9 @@
     "products": [
         {
             "id": "OLJCESPC7Z",
-            "name": "Sunglasses",
-            "description": "Add a modern touch to your outfits with these sleek aviator sunglasses.",
-            "picture": "/static/img/products/sunglasses.jpg",
+            "name": "Advanced Cluster Management for Kubernetes",
+            "description": "Red Hat Advanced Cluster Management for Kubernetes provides the multicluster hub, a central management console for managing multiple Kubernetes-based clusters across data centers, public clouds, and private clouds.",
+            "picture": "/static/img/products/advanced-cluster-management.svg",
             "priceUsd": {
                 "currencyCode": "USD",
                 "units": 19,
@@ -14,9 +14,9 @@
         },
         {
             "id": "66VCHSJNUP",
-            "name": "Tank Top",
-            "description": "Perfectly cropped cotton tank, with a scooped neckline.",
-            "picture": "/static/img/products/tank-top.jpg",
+            "name": "Cryostat",
+            "description": "Cryostat provides a cloud-based solution for interacting with the JDK Flight Recorder already present in OpenJDK 11+ JVMs. With Cryostat, users can remotely start, stop, retrieve, and even analyze JFR event data, providing the capbility to easily take advantage of Flight Recorder's extremely low runtime cost and overhead and the flexibility to monitor applications and analyze recording data without transferring data outside of the cluster the application runs within.",
+            "picture": "/static/img/products/cryostat.svg",
             "priceUsd": {
                 "currencyCode": "USD",
                 "units": 18,
@@ -26,9 +26,9 @@
         },
         {
             "id": "1YMWWN1N4O",
-            "name": "Watch",
-            "description": "This gold-tone stainless steel watch will work with most of your outfits.",
-            "picture": "/static/img/products/watch.jpg",
+            "name": "Business Automation",
+            "description": "Red Hat Process Automation Manager is a platform for developing containerized microservices and applications that automate business decisions and processes.",
+            "picture": "/static/img/products/business-automation.svg",
             "priceUsd": {
                 "currencyCode": "USD",
                 "units": 109,
@@ -38,9 +38,9 @@
         },
         {
             "id": "L9ECAV7KIM",
-            "name": "Loafers",
-            "description": "A neat addition to your summer wardrobe.",
-            "picture": "/static/img/products/loafers.jpg",
+            "name": "Kiali",
+            "description": "Kiali works with OpenShift Service Mesh to visualize the service mesh topology, to provide visibility into features like circuit breakers, request rates and more. It offers insights about the mesh components at different levels, from abstract Applications to Services and Workloads.",
+            "picture": "/static/img/products/kiali.svg",
             "priceUsd": {
                 "currencyCode": "USD",
                 "units": 89,
@@ -50,9 +50,9 @@
         },
         {
             "id": "2ZYFJ3GM2N",
-            "name": "Hairdryer",
-            "description": "This lightweight hairdryer has 3 heat and speed settings. It's perfect for travel.",
-            "picture": "/static/img/products/hairdryer.jpg",
+            "name": "JBoss EAP",
+            "description": "JBoss EAP 7 is built to provide simplified deployment and full Java™ EE performance for applications in any environment. Whether on-premise or in virtual, private, public, and hybrid clouds, JBoss EAP features a modular architecture that starts services only as they are required.",
+            "picture": "/static/img/products/jboss-eap.svg",
             "priceUsd": {
                 "currencyCode": "USD",
                 "units": 24,
@@ -62,9 +62,9 @@
         },
         {
             "id": "0PUK6V6EV0",
-            "name": "Candle Holder",
-            "description": "This small but intricate candle holder is an excellent gift.",
-            "picture": "/static/img/products/candle-holder.jpg",
+            "name": "Data Grid",
+            "description": "Red Hat Data Grid is a distributed, in-memory data store built from tried and trusted open-source technology.",
+            "picture": "/static/img/products/data-grid.svg",
             "priceUsd": {
                 "currencyCode": "USD",
                 "units": 18,
@@ -74,9 +74,9 @@
         },
         {
             "id": "LS4PSXUNUM",
-            "name": "Salt & Pepper Shakers",
-            "description": "Add some flavor to your kitchen.",
-            "picture": "/static/img/products/salt-and-pepper-shakers.jpg",
+            "name": "OpenShift Virtualization",
+            "description": "OpenShift Virtualization extends Red Hat OpenShift Container Platform, allowing you to host and manage virtualized workloads on the same platform as container-based workloads.",
+            "picture": "/static/img/products/openshift-virtualization.svg",
             "priceUsd": {
                 "currencyCode": "USD",
                 "units": 18,
@@ -86,9 +86,9 @@
         },
         {
             "id": "9SIQT8TOJO",
-            "name": "Bamboo Glass Jar",
-            "description": "This bamboo glass jar can hold 57 oz (1.7 l) and is perfect for any kitchen.",
-            "picture": "/static/img/products/bamboo-glass-jar.jpg",
+            "name": "Skupper",
+            "description": "The Skupper site controller operator helps you managing your site by watching for a ConfigMap named skupper-site. To get started with it you can simply define this ConfigMap in the desired namespace and the skupper operator will take care of defining your site accordingly.",
+            "picture": "/static/img/products/skupper.svg",
             "priceUsd": {
                 "currencyCode": "USD",
                 "units": 5,
@@ -98,9 +98,9 @@
         },
         {
             "id": "6E92ZMYYFZ",
-            "name": "Mug",
-            "description": "A simple mug with a mustard interior.",
-            "picture": "/static/img/products/mug.jpg",
+            "name": "Submariner",
+            "description": "Submariner enables direct networking between Pods and Services in different Kubernetes clusters.",
+            "picture": "/static/img/products/submariner.svg",
             "priceUsd": {
                 "currencyCode": "USD",
                 "units": 8,
