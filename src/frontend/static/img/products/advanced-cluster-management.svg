@@ -1,1 +1,146 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 721.15 721.15"><defs><style>.cls-1{fill:#db3927;}.cls-2{fill:#cb3628;}.cls-3{fill:#fff;}.cls-4{fill:#e3e3e2;}</style></defs><title>Product_Icon-Red_HatAdvanced_Cluster_Management_for_Kubernetes-RGB</title><g id="Layer_1" data-name="Layer 1"><circle class="cls-1" cx="360.57" cy="360.57" r="358.58"/><path class="cls-2" d="M614.13,107,107,614.13c140,140,367.07,140,507.11,0S754.16,247.06,614.13,107Z"/><rect class="cls-3" x="330.87" y="280.6" width="203.17" height="20" transform="translate(-78.9 390.52) rotate(-44.96)"/><rect class="cls-3" x="306.63" y="167.83" width="20" height="204.47" transform="translate(-85.33 162.27) rotate(-25.45)"/><rect class="cls-3" x="162.98" y="364.1" width="198.28" height="20" transform="translate(-42.39 33.61) rotate(-6.79)"/><rect class="cls-3" x="245.1" y="451.54" width="200.62" height="20" transform="translate(-163.01 733.26) rotate(-81.31)"/><rect class="cls-3" x="443.85" y="303.76" width="20" height="207.04" transform="translate(-109.97 639.58) rotate(-64.3)"/><circle class="cls-3" cx="504.34" cy="218.83" r="44.08"/><circle class="cls-3" cx="272.7" cy="177.75" r="44.08"/><circle class="cls-3" cx="547.12" cy="452.17" r="44.08"/><circle class="cls-3" cx="163.68" cy="385.82" r="44.08"/><circle class="cls-3" cx="330.26" cy="560.7" r="44.08"/><path class="cls-4" d="M444.94,279.92,276.19,448.67A119.32,119.32,0,0,0,444.94,279.92Z"/><path class="cls-3" d="M375.68,245.76a119.33,119.33,0,0,0-99.49,202.91L444.94,279.92A118.89,118.89,0,0,0,375.68,245.76Z"/></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 721.15 721.15"
+   version="1.1"
+   id="svg37"
+   sodipodi:docname="advanced-cluster-management.svg"
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15)">
+  <metadata
+     id="metadata41">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1908"
+     inkscape:window-height="2096"
+     id="namedview39"
+     showgrid="false"
+     inkscape:zoom="0.49418541"
+     inkscape:cx="377.03728"
+     inkscape:cy="27.845684"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg37" />
+  <defs
+     id="defs4">
+    <style
+       id="style2">.cls-1{fill:#db3927;}.cls-2{fill:#cb3628;}.cls-3{fill:#fff;}.cls-4{fill:#e3e3e2;}</style>
+  </defs>
+  <title
+     id="title6">Product_Icon-Red_HatAdvanced_Cluster_Management_for_Kubernetes-RGB</title>
+  <g
+     id="Layer_1"
+     data-name="Layer 1"
+     transform="matrix(0.67127502,0,0,0.67127502,123.23891,95.699163)">
+    <circle
+       class="cls-1"
+       cx="360.57001"
+       cy="360.57001"
+       r="358.57999"
+       id="circle8" />
+    <path
+       class="cls-2"
+       d="M 614.13,107 107,614.13 c 140,140 367.07,140 507.11,0 140.04,-140 140.05,-367.07 0.02,-507.13 z"
+       id="path10" />
+    <rect
+       class="cls-3"
+       x="330.87"
+       y="280.60001"
+       width="203.17"
+       height="20"
+       transform="rotate(-44.96,432.41515,290.59484)"
+       id="rect12" />
+    <rect
+       class="cls-3"
+       x="306.63"
+       y="167.83"
+       width="20"
+       height="204.47"
+       transform="rotate(-25.45,316.62834,270.07011)"
+       id="rect14" />
+    <rect
+       class="cls-3"
+       x="162.98"
+       y="364.10001"
+       width="198.28"
+       height="20"
+       transform="rotate(-6.79,262.08289,374.08408)"
+       id="rect16" />
+    <rect
+       class="cls-3"
+       x="245.10001"
+       y="451.54001"
+       width="200.62"
+       height="20"
+       transform="rotate(-81.31,345.41948,461.53898)"
+       id="rect18" />
+    <rect
+       class="cls-3"
+       x="443.85001"
+       y="303.76001"
+       width="20"
+       height="207.03999"
+       transform="rotate(-64.3,453.81705,407.27391)"
+       id="rect20" />
+    <circle
+       class="cls-3"
+       cx="504.34"
+       cy="218.83"
+       r="44.080002"
+       id="circle22" />
+    <circle
+       class="cls-3"
+       cx="272.70001"
+       cy="177.75"
+       r="44.080002"
+       id="circle24" />
+    <circle
+       class="cls-3"
+       cx="547.12"
+       cy="452.17001"
+       r="44.080002"
+       id="circle26" />
+    <circle
+       class="cls-3"
+       cx="163.67999"
+       cy="385.82001"
+       r="44.080002"
+       id="circle28" />
+    <circle
+       class="cls-3"
+       cx="330.26001"
+       cy="560.70001"
+       r="44.080002"
+       id="circle30" />
+    <path
+       class="cls-4"
+       d="M 444.94,279.92 276.19,448.67 A 119.32427,119.32427 0 0 0 444.94,279.92 Z"
+       id="path32" />
+    <path
+       class="cls-3"
+       d="M 375.68,245.76 A 119.33,119.33 0 0 0 276.19,448.67 L 444.94,279.92 a 118.89,118.89 0 0 0 -69.26,-34.16 z"
+       id="path34" />
+  </g>
+</svg>

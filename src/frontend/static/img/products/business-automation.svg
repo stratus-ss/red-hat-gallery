@@ -1,1 +1,76 @@
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 721.15 721.15"><defs><style>.cls-1{fill:#dd3926;}.cls-2{fill:#cc3427;}.cls-3{fill:#fff;}.cls-4{fill:#e5e5e4;}</style></defs><title>Product_Icon-Red_Hat-Automation-RGB</title><circle class="cls-1" cx="360.57" cy="360.57" r="358.58"/><path class="cls-2" d="M613.78,107.09,106.72,614.16c140.14,138.62,366.11,138.16,505.67-1.4S752.4,247.24,613.78,107.09Z"/><polygon class="cls-3" points="378.97 327.48 461.77 159.57 259.67 159.49 259.67 413.1 306.97 413.78 393.27 327.47 378.97 327.48"/><polygon class="cls-4" points="359.6 578.06 482.55 327.45 393.27 327.47 306.97 413.78 359.6 414.52 359.6 578.06"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="Layer_1"
+   data-name="Layer 1"
+   viewBox="0 0 721.15 721.15"
+   version="1.1"
+   sodipodi:docname="business-automation.svg"
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15)">
+  <metadata
+     id="metadata19">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1908"
+     inkscape:window-height="2096"
+     id="namedview17"
+     showgrid="false"
+     inkscape:zoom="0.98837081"
+     inkscape:cx="541.69646"
+     inkscape:cy="-25.064136"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="Layer_1" />
+  <defs
+     id="defs4">
+    <style
+       id="style2">.cls-1{fill:#dd3926;}.cls-2{fill:#cc3427;}.cls-3{fill:#fff;}.cls-4{fill:#e5e5e4;}</style>
+  </defs>
+  <title
+     id="title6">Product_Icon-Red_Hat-Automation-RGB</title>
+  <circle
+     class="cls-1"
+     cx="356.93063"
+     cy="341.53986"
+     r="211.58873"
+     id="circle8"
+     style="stroke-width:0.590074" />
+  <path
+     class="cls-2"
+     d="M 506.34328,191.9679 207.14034,491.17674 c 82.69298,81.79606 216.032,81.52462 298.38274,-0.82611 82.35073,-82.35073 82.61626,-215.68386 0.8202,-298.38273 z"
+     id="path10"
+     style="stroke-width:0.590074" />
+  <polygon
+     class="cls-3"
+     points="259.67,159.49 259.67,413.1 306.97,413.78 393.27,327.47 378.97,327.48 461.77,159.57 "
+     id="polygon12"
+     transform="matrix(0.59007403,0,0,0.59007403,144.16764,128.77687)" />
+  <polygon
+     class="cls-4"
+     points="393.27,327.47 306.97,413.78 359.6,414.52 359.6,578.06 482.55,327.45 "
+     id="polygon14"
+     transform="matrix(0.59007403,0,0,0.59007403,144.16764,128.77687)" />
+</svg>
