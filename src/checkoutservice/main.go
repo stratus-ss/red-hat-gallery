@@ -18,11 +18,13 @@ import (
 	"context"
 	"fmt"
 	"net"
+	"net/http"
 	"os"
 	"time"
 
 	"cloud.google.com/go/profiler"
 	"contrib.go.opencensus.io/exporter/jaeger"
+	"contrib.go.opencensus.io/exporter/prometheus"
 	"contrib.go.opencensus.io/exporter/stackdriver"
 	"github.com/google/uuid"
 	"github.com/sirupsen/logrus"
@@ -82,6 +84,8 @@ func main() {
 	} else {
 		log.Info("Profiling disabled.")
 	}
+
+	initPrometheusStats()
 
 	port := listenPort
 	if os.Getenv("PORT") != "" {
@@ -170,6 +174,27 @@ func initStackdriverTracing() {
 		time.Sleep(d)
 	}
 	log.Warn("could not initialize Stackdriver exporter after retrying, giving up")
+}
+
+func initPrometheusStats() {
+	pe, err := prometheus.NewExporter(prometheus.Options{})
+	if err != nil {
+		log.Errorf("Failed to create Prometheus exporter: %v", err)
+		return
+	}
+	go func() {
+		mux := http.NewServeMux()
+		mux.Handle("/metrics", pe)
+		if err := http.ListenAndServe(":9393", mux); err != nil {
+			log.Errorf("Failed to run Prometheus /metrics endpoint: %v", err)
+		}
+	}()
+	view.RegisterExporter(pe)
+	if err := view.Register(ocgrpc.DefaultServerViews...); err != nil {
+		log.Errorf("Error registering default server views")
+	} else {
+		log.Info("Registered default server views")
+	}
 }
 
 func initTracing() {
