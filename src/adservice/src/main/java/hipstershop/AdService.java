@@ -30,6 +30,7 @@ import io.grpc.services.*;
 import io.grpc.stub.StreamObserver;
 import io.opencensus.common.Duration;
 import io.opencensus.contrib.grpc.metrics.RpcViews;
+import io.opencensus.exporter.stats.prometheus.PrometheusStatsCollector;
 import io.opencensus.exporter.stats.stackdriver.StackdriverStatsConfiguration;
 import io.opencensus.exporter.stats.stackdriver.StackdriverStatsExporter;
 import io.opencensus.exporter.trace.jaeger.JaegerExporterConfiguration;
@@ -40,6 +41,7 @@ import io.opencensus.trace.AttributeValue;
 import io.opencensus.trace.Span;
 import io.opencensus.trace.Tracer;
 import io.opencensus.trace.Tracing;
+import io.prometheus.client.exporter.HTTPServer;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -312,6 +314,18 @@ public final class AdService {
     }
   }
 
+  private static void initPrometheus() {
+    // Register the Prometheus exporter
+    PrometheusStatsCollector.createAndRegister();
+    // Run the server as a daemon on address "*:9393"
+    try {
+      HTTPServer server = new HTTPServer.Builder().withPort(9393).build();
+      logger.info("Prometheus initialization complete.");
+    } catch (IOException e) {
+      logger.info("Prometheus initialization failed.", e);
+    }
+  }
+
   /** Main launches the server from the command line. */
   public static void main(String[] args) throws IOException, InterruptedException {
     // Registers all RPC views.
@@ -326,6 +340,9 @@ public final class AdService {
 
     // Register Jaeger
     initJaeger();
+
+    // Register Prometheus
+    initPrometheus();
 
     // Start the RPC server. You shouldn't see any output from gRPC before this.
     logger.info("AdService starting.");
