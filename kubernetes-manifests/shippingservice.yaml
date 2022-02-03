@@ -31,6 +31,7 @@ spec:
         image: shippingservice
         ports:
         - containerPort: 50051
+        - containerPort: 9393
         env:
         - name: PORT
           value: "50051"
@@ -60,6 +61,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  labels:
+    app: shippingservice
   name: shippingservice
 spec:
   type: ClusterIP
@@ -69,3 +72,5 @@ spec:
   - name: grpc
     port: 50051
     targetPort: 50051
+  - name: metrics
+    port: 9393

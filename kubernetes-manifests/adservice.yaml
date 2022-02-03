@@ -32,6 +32,7 @@ spec:
         image: adservice
         ports:
         - containerPort: 9555
+        - containerPort: 9393
         env:
         - name: PORT
           value: "9555"
@@ -62,6 +63,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  labels:
+    app: adservice
   name: adservice
 spec:
   type: ClusterIP
@@ -71,3 +74,5 @@ spec:
   - name: grpc
     port: 9555
     targetPort: 9555
+  - name: metrics
+    port: 9393

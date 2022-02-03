@@ -31,6 +31,7 @@ spec:
           image: checkoutservice
           ports:
           - containerPort: 5050
+          - containerPort: 9393
           readinessProbe:
             exec:
               command: ["/bin/grpc_health_probe", "-addr=:5050"]
@@ -71,6 +72,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  labels:
+    app: checkoutservice
   name: checkoutservice
 spec:
   type: ClusterIP
@@ -80,3 +83,5 @@ spec:
   - name: grpc
     port: 5050
     targetPort: 5050
+  - name: metrics
+    port: 9393

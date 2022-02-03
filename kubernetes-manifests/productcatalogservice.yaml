@@ -32,6 +32,7 @@ spec:
         image: productcatalogservice
         ports:
         - containerPort: 3550
+        - containerPort: 9393
         env:
         - name: PORT
           value: "3550"
@@ -60,6 +61,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  labels:
+    app: productcatalogservice
   name: productcatalogservice
 spec:
   type: ClusterIP
@@ -69,3 +72,5 @@ spec:
   - name: grpc
     port: 3550
     targetPort: 3550
+  - name: metrics
+    port: 9393
