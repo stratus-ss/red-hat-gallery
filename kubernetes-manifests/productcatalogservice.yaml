@@ -74,3 +74,16 @@ spec:
     targetPort: 3550
   - name: metrics
     port: 9393
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: productcatalogservice
+spec:
+  endpoints:
+  - interval: 30s
+    port: metrics
+    scheme: http
+  selector:
+    matchLabels:
+      app: productcatalogservice
