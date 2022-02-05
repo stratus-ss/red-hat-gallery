@@ -22,6 +22,8 @@ spec:
       app: paymentservice
   template:
     metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
       labels:
         app: paymentservice
     spec:

@@ -22,6 +22,8 @@ spec:
       app: checkoutservice
   template:
     metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
       labels:
         app: checkoutservice
     spec:

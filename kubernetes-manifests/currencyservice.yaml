@@ -22,6 +22,8 @@ spec:
       app: currencyservice
   template:
     metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
       labels:
         app: currencyservice
     spec:

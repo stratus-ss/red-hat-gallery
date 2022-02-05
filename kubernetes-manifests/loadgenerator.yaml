@@ -26,6 +26,7 @@ spec:
         app: loadgenerator
       annotations:
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
+        sidecar.istio.io/inject: "true"
     spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5

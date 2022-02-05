@@ -22,6 +22,8 @@ spec:
       app: redis-cart
   template:
     metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
       labels:
         app: redis-cart
     spec:
