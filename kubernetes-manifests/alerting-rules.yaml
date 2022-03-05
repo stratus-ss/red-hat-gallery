@@ -1,0 +1,159 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: alerting-rules
+spec:
+  groups:
+  - name: redhatgallery
+    rules:
+    - alert: RedHatGalleryResponseSlow
+      annotations:
+        description: Method {{ $labels.grpc_server_method_short }} in namespace {{ $labels.namespace }} is too slow. {{ $value | humanizePercentage }} of requests take more than 200ms.
+        summary:
+      expr: |
+        1 - label_replace(
+          (
+            (sum without (instance, pod)
+              (rate(grpc_io_server_server_latency_bucket{le="200"}[2m]))
+            )
+              / ignoring(le)
+            (sum without (instance, pod)
+              (rate(grpc_io_server_server_latency_bucket{le="+Inf"}[2m]))
+            )
+          ),
+          "grpc_server_method_short", "$1", "grpc_server_method", ".*\\.(.*)"
+        ) > 0.25
+      for: 1m
+      labels:
+        severity: warning
+    - alert: RedHatGalleryResponseVerySlow
+      annotations:
+        description: Method {{ $labels.grpc_server_method_short }} in namespace {{ $labels.namespace }} is too slow. {{ $value | humanizePercentage }} of requests take more than 500ms.
+        summary:
+      expr: |
+        1 - label_replace(
+          (
+            (sum without (instance, pod)
+              (rate(grpc_io_server_server_latency_bucket{le="500"}[2m]))
+            )
+              / ignoring(le)
+            (sum without (instance, pod)
+              (rate(grpc_io_server_server_latency_bucket{le="+Inf"}[2m]))
+            )
+          ),
+          "grpc_server_method_short", "$1", "grpc_server_method", ".*\\.(.*)"
+        ) > 0.25
+      for: 1m
+      labels:
+        severity: critical
+    - alert: RedHatGalleryResponseSlow
+      annotations:
+        description: Response of service {{ $labels.service }} in namespace {{ $labels.namespace }} is too slow. {{ $value | humanizePercentage }} of requests take more than 200ms.
+        summary:
+      expr: |
+        1 - (
+          (sum without (instance, pod)
+            (rate(opencensus_io_http_server_latency_bucket{le="200"}[2m]))
+          )
+            / ignoring(le)
+          (sum without (instance, pod)
+            (rate(opencensus_io_http_server_latency_bucket{le="+Inf"}[2m]))
+          )
+        ) > 0.25
+      for: 1m
+      labels:
+        severity: warning
+    - alert: RedHatGalleryResponseVerySlow
+      annotations:
+        description: Response of service {{ $labels.service }} in namespace {{ $labels.namespace }} is too slow. {{ $value | humanizePercentage }} of requests take more than 500ms.
+        summary:
+      expr: |
+        1 - (
+          (sum without (instance, pod)
+            (rate(opencensus_io_http_server_latency_bucket{le="500"}[2m]))
+          )
+            / ignoring(le)
+          (sum without (instance, pod)
+            (rate(opencensus_io_http_server_latency_bucket{le="+Inf"}[2m]))
+          )
+        ) > 0.25
+      for: 1m
+      labels:
+        severity: critical
+    - alert: RedHatGalleryTooManyFailingRequests
+      annotations:
+        description: >
+          {{ $value | humanizePercentage }} of calls to method {{ $labels.grpc_server_method_short }} in namespace {{ $labels.namespace }} is failing.
+      expr: |
+        label_replace(
+          (
+            (sum without (grpc_server_status, instance, pod)
+              (rate(grpc_io_server_completed_rpcs_total{grpc_server_status!="OK"}[2m]))
+            )
+              /
+            (sum without (grpc_server_status, instance, pod)
+              (rate(grpc_io_server_completed_rpcs_total[2m]))
+            )
+          ),
+          "grpc_server_method_short", "$1", "grpc_server_method", ".*\\.(.*)"
+        ) > 0.05
+      for: 1m
+      labels:
+        severity: warning
+    - alert: RedHatGalleryTooManyFailingRequests
+      annotations:
+        description: >
+          {{ $value | humanizePercentage }} of calls to method {{ $labels.grpc_server_method_short }} in namespace {{ $labels.namespace }} is failing.
+      expr: |
+        label_replace(
+          (
+            (sum without (grpc_server_status, instance, pod)
+              (rate(grpc_io_server_completed_rpcs{grpc_server_status!="OK"}[2m]))
+            )
+              /
+            (sum without (grpc_server_status, instance, pod)
+              (rate(grpc_io_server_completed_rpcs[2m]))
+            )
+          ),
+          "grpc_server_method_short", "$1", "grpc_server_method", ".*\\.(.*)"
+        ) > 0.05
+      for: 1m
+      labels:
+        severity: warning
+    - alert: RedHatGalleryTooManyFailingRequests
+      annotations:
+        description: >
+          {{ $value | humanizePercentage }} of calls to method {{ $labels.grpc_client_method_short }} in namespace {{ $labels.namespace }} is failing.
+      expr: |
+        label_replace(
+          (
+            (sum without (grpc_client_status, instance, pod)
+              (rate(grpc_io_client_completed_rpcs{grpc_client_status!="OK"}[2m]))
+            )
+              /
+            (sum without (grpc_client_status, instance, pod)
+              (rate(grpc_io_client_completed_rpcs[2m]))
+            )
+          ),
+          "grpc_client_method_short", "$1", "grpc_client_method", ".*\\.(.*)"
+        ) > 0.05
+      for: 1m
+      labels:
+        severity: warning
+    - alert: RedHatGalleryTooManyFailingRequests
+      annotations:
+        description: >
+          {{ $value | humanizePercentage }} of HTTP calls to service {{ $labels.service }} in namespace {{ $labels.namespace }} is failing.
+      expr: |
+        (
+          (sum without (http_status, instance, pod)
+            (rate(opencensus_io_http_server_response_count_by_status_code{http_status=~"4.*|5.*"}[2m]))
+          )
+            /
+          (sum without (http_status, instance, pod)
+            (rate(opencensus_io_http_server_response_count_by_status_code[2m]))
+          )
+        ) > 0.05
+      for: 1m
+      labels:
+        severity: warning
