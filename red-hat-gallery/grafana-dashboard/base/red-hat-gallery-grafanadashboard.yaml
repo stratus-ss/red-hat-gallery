@@ -1,0 +1,11 @@
+apiVersion: integreatly.org/v1alpha1
+kind: GrafanaDashboard
+metadata:
+  name: red-hat-gallery
+  labels:
+    app: grafana
+spec:
+  customFolderName: Red Hat Gallery
+  configMapRef:
+    name: red-hat-gallery-dashboard
+    key: dashboard.json

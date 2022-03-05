@@ -1504,7 +1504,7 @@
         "hide": 2,
         "label": "Kubernetes namespace",
         "name": "namespace",
-        "query": "red-hat-gallery",
+        "query": "gallery",
         "skipUrlSync": false,
         "type": "constant"
       }
@@ -1516,7 +1516,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Red Hat Gallery",
+  "title": "Red Hat Gallery Dashboard",
   "uid": "dLOCmxf7z",
   "version": 32
 }

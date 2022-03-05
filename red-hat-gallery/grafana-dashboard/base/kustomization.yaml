@@ -1,0 +1,26 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: gallery
+
+configMapGenerator:
+- files:
+  - conf/dashboard.json
+  name: red-hat-gallery-dashboard
+
+vars:
+- fieldref:
+    fieldPath: metadata.namespace
+  name: NAMESPACE
+  objref:
+    apiVersion: integreatly.org/v1alpha1
+    kind: GrafanaDataSource
+    name: openshift-monitoring
+
+resources:
+- grafana-cluster-monitoring-view-clusterrolebinding.yaml
+- openshift-monitoring-grafanadatasource.yaml
+- red-hat-gallery-grafanadashboard.yaml
+
+configurations:
+- kustomizeconfig.yaml

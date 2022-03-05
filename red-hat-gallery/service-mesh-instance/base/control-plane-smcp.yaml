@@ -1,0 +1,68 @@
+apiVersion: maistra.io/v2
+kind: ServiceMeshControlPlane
+metadata:
+  name: control-plane
+spec:
+  version: v2.1
+  # A complete example of maistra.io/v2 ServiceMeshControlPlane can be found at:
+  # https://github.com/maistra/istio-operator/blob/maistra-2.0/pkg/apis/maistra/v2/smcp_new.yaml
+  general:
+    # Configures the control plane to add validationMessages to the status fields
+    # of istio.io resource
+    validationMessages: true
+  proxy:
+    networking:
+      trafficControl:
+        inbound: {}
+        outbound:
+          policy: ALLOW_ANY
+  gateways:
+    ingress:
+      runtime:
+        deployment:
+          autoScaling:
+            enabled: false
+      service: {}
+    egress:
+      runtime:
+        deployment:
+          autoScaling:
+            enabled: false
+      service: {}
+    openshiftRoute:
+      enabled: true
+  policy:
+    type: Istiod
+  telemetry:
+    type: Istiod
+  tracing:
+    type: Jaeger
+  addons:
+    grafana:
+      enabled: true
+    jaeger:
+      install:
+        storage:
+          type: Memory
+        ingress: {}
+    kiali:
+      enabled: true
+      install:
+        dashboard:
+          viewOnly: false
+        service:
+          ingress:
+            enabled: true
+  security:
+    dataPlane:
+      # Must be false to allow OpenShift's Prometheus
+      # to scrape the applicatio nmetrics
+      mtls: false
+  runtime:
+    components:
+      pilot:
+        deployment:
+          autoScaling:
+            enabled: false
+  profiles:
+  - default

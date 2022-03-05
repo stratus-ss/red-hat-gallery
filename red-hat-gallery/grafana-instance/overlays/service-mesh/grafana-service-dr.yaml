@@ -1,0 +1,9 @@
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: grafana-service
+spec:
+  host: grafana-service
+  trafficPolicy:
+    tls:
+      mode: DISABLE

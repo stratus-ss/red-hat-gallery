@@ -1,0 +1,9 @@
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: jaeger-collector
+spec:
+  host: jaeger-collector
+  trafficPolicy:
+    tls:
+      mode: DISABLE
