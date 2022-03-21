@@ -239,6 +239,22 @@ Use your browser to navigate to the Jager dashboard URL. You should be able to l
 
 The following command will build container images locally using Docker and push them to a container image registry. Replace the REPO_PREFIX with your registry before issuing the command:
 
+> :warning: If building the images yourself, you need to insure that the following repos exist before running the below command:
+> ```adservice    
+> cartservice
+> checkoutservice  
+> currencyservice
+> emailservice  
+> frontend
+> loadgenerator   
+> paymentservice
+> productcatalogservice  
+> recommendationservice
+> shippingservice
+> ```
+> You need to have admin rights on these repos. It may be advisable to create a robot account with proper permissions before continuing
+
+
 ```
 $ TAG=latest \
   REPO_PREFIX=quay.io/noseka1/red-hat-gallery \
