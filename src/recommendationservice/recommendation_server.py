@@ -64,22 +64,22 @@ def initStackdriverProfiling():
 
 class RecommendationService(demo_pb2_grpc.RecommendationServiceServicer):
     def ListRecommendations(self, request, context):
-        max_responses = 5
-        # fetch list of products from product catalog stub
-        cat_response = product_catalog_stub.ListProducts(demo_pb2.Empty())
-        product_ids = [x.id for x in cat_response.products]
-        filtered_products = list(set(product_ids)-set(request.product_ids))
-        num_products = len(filtered_products)
-        num_return = min(max_responses, num_products)
-        # sample list of indicies to return
-        indices = random.sample(range(num_products), num_return)
-        # fetch product ids from indices
-        prod_list = [filtered_products[i] for i in indices]
-        logger.info("[Recv ListRecommendations] product_ids={}".format(prod_list))
-        # build and return response
-        response = demo_pb2.ListRecommendationsResponse()
-        response.product_ids.extend(prod_list)
-        return response
+      max_responses = 5
+      # fetch list of products from product catalog stub
+      cat_response = product_catalog_stub.ListProducts(demo_pb2.Empty())
+      product_ids = [x.id for x in cat_response.products]
+      filtered_products = list(set(product_ids)-set(request.product_ids))
+      num_products = len(filtered_products)
+      num_return = min(max_responses, num_products)
+      # sample list of indicies to return
+      indices = random.sample(range(num_products), num_return)
+      # fetch product ids from indices
+      prod_list = [filtered_products[i] for i in indices]
+      logger.info(f"[Recv ListRecommendations] product_ids={prod_list}")
+      # build and return response
+      response = demo_pb2.ListRecommendationsResponse()
+      response.product_ids.extend(prod_list)
+      return response
 
     def Check(self, request, context):
         return health_pb2.HealthCheckResponse(
@@ -91,76 +91,72 @@ class RecommendationService(demo_pb2_grpc.RecommendationServiceServicer):
 
 
 if __name__ == "__main__":
-    logger.info("initializing recommendationservice")
+  logger.info("initializing recommendationservice")
 
-    try:
-      if "DISABLE_PROFILER" in os.environ:
-        raise KeyError()
-      else:
-        logger.info("Profiler enabled.")
-        initStackdriverProfiling()
-    except KeyError:
-        logger.info("Profiler disabled.")
+  try:
+    if "DISABLE_PROFILER" in os.environ:
+      raise KeyError()
+    logger.info("Profiler enabled.")
+    initStackdriverProfiling()
+  except KeyError:
+      logger.info("Profiler disabled.")
 
+  try:
+    if "DISABLE_TRACING" in os.environ:
+      raise KeyError()
+    logger.info("Tracing enabled.")
+    sampler = samplers.AlwaysOnSampler()
+    exporter = stackdriver_exporter.StackdriverExporter(
+      project_id=os.environ.get('GCP_PROJECT_ID'),
+      transport=AsyncTransport)
+    tracer_interceptor = server_interceptor.OpenCensusServerInterceptor(sampler, exporter)
+  except (KeyError, DefaultCredentialsError):
+      logger.info("Tracing disabled.")
+      tracer_interceptor = server_interceptor.OpenCensusServerInterceptor()
+  except Exception as e:
+      logger.warn(f"Exception on Cloud Trace setup: {traceback.format_exc()}, tracing disabled.") 
+      tracer_interceptor = server_interceptor.OpenCensusServerInterceptor()
+
+  try:
+    if "DISABLE_DEBUGGER" in os.environ:
+      raise KeyError()
+    logger.info("Debugger enabled.")
     try:
-      if "DISABLE_TRACING" in os.environ:
-        raise KeyError()
-      else:
-        logger.info("Tracing enabled.")
-        sampler = samplers.AlwaysOnSampler()
-        exporter = stackdriver_exporter.StackdriverExporter(
-          project_id=os.environ.get('GCP_PROJECT_ID'),
-          transport=AsyncTransport)
-        tracer_interceptor = server_interceptor.OpenCensusServerInterceptor(sampler, exporter)
-    except (KeyError, DefaultCredentialsError):
-        logger.info("Tracing disabled.")
-        tracer_interceptor = server_interceptor.OpenCensusServerInterceptor()
-    except Exception as e:
-        logger.warn(f"Exception on Cloud Trace setup: {traceback.format_exc()}, tracing disabled.") 
-        tracer_interceptor = server_interceptor.OpenCensusServerInterceptor()
-   
-    try:
-      if "DISABLE_DEBUGGER" in os.environ:
-        raise KeyError()
-      else:
-        logger.info("Debugger enabled.")
-        try:
-          googleclouddebugger.enable(
-              module='recommendationserver',
-              version='1.0.0'
-          )
-        except (Exception, DefaultCredentialsError):
-            logger.error("Could not enable debugger")
-            logger.error(traceback.print_exc())
-            pass
+      googleclouddebugger.enable(
+          module='recommendationserver',
+          version='1.0.0'
+      )
     except (Exception, DefaultCredentialsError):
-        logger.info("Debugger disabled.")
+      logger.error("Could not enable debugger")
+      logger.error(traceback.print_exc())
+  except (Exception, DefaultCredentialsError):
+      logger.info("Debugger disabled.")
 
-    port = os.environ.get('PORT', "8080")
-    catalog_addr = os.environ.get('PRODUCT_CATALOG_SERVICE_ADDR', '')
-    if catalog_addr == "":
-        raise Exception('PRODUCT_CATALOG_SERVICE_ADDR environment variable not set')
-    logger.info("product catalog address: " + catalog_addr)
-    channel = grpc.insecure_channel(catalog_addr)
-    product_catalog_stub = demo_pb2_grpc.ProductCatalogServiceStub(channel)
+  port = os.environ.get('PORT', "8080")
+  catalog_addr = os.environ.get('PRODUCT_CATALOG_SERVICE_ADDR', '')
+  if catalog_addr == "":
+      raise Exception('PRODUCT_CATALOG_SERVICE_ADDR environment variable not set')
+  logger.info(f"product catalog address: {catalog_addr}")
+  channel = grpc.insecure_channel(catalog_addr)
+  product_catalog_stub = demo_pb2_grpc.ProductCatalogServiceStub(channel)
 
-    # create gRPC server
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10),
-                      interceptors=(tracer_interceptor,))
+  # create gRPC server
+  server = grpc.server(futures.ThreadPoolExecutor(max_workers=10),
+                    interceptors=(tracer_interceptor,))
 
-    # add class to gRPC server
-    service = RecommendationService()
-    demo_pb2_grpc.add_RecommendationServiceServicer_to_server(service, server)
-    health_pb2_grpc.add_HealthServicer_to_server(service, server)
+  # add class to gRPC server
+  service = RecommendationService()
+  demo_pb2_grpc.add_RecommendationServiceServicer_to_server(service, server)
+  health_pb2_grpc.add_HealthServicer_to_server(service, server)
 
     # start server
-    logger.info("listening on port: " + port)
-    server.add_insecure_port('[::]:'+port)
-    server.start()
+  logger.info(f"listening on port: {port}")
+  server.add_insecure_port(f'[::]:{port}')
+  server.start()
 
-    # keep alive
-    try:
-         while True:
-            time.sleep(10000)
-    except KeyboardInterrupt:
-            server.stop(0)
+  # keep alive
+  try:
+       while True:
+          time.sleep(10000)
+  except KeyboardInterrupt:
+          server.stop(0)

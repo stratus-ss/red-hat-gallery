@@ -68,7 +68,6 @@ class BaseEmailService(demo_pb2_grpc.EmailServiceServicer):
 class EmailService(BaseEmailService):
   def __init__(self):
     raise Exception('cloud mail client not implemented')
-    super().__init__()
 
   @staticmethod
   def send_email(client, email_address, content):
@@ -88,7 +87,7 @@ class EmailService(BaseEmailService):
         "html_body": content
       }
     )
-    logger.info("Message sent: {}".format(response.rfc822_message_id))
+    logger.info(f"Message sent: {response.rfc822_message_id}")
 
   def SendOrderConfirmation(self, request, context):
     email = request.email
@@ -114,7 +113,9 @@ class EmailService(BaseEmailService):
 
 class DummyEmailService(BaseEmailService):
   def SendOrderConfirmation(self, request, context):
-    logger.info('A request to send order confirmation email to {} has been received.'.format(request.email))
+    logger.info(
+        f'A request to send order confirmation email to {request.email} has been received.'
+    )
     return demo_pb2.Empty()
 
 class HealthCheck():
@@ -135,8 +136,8 @@ def start(dummy_mode):
   health_pb2_grpc.add_HealthServicer_to_server(service, server)
 
   port = os.environ.get('PORT', "8080")
-  logger.info("listening on port: "+port)
-  server.add_insecure_port('[::]:'+port)
+  logger.info(f"listening on port: {port}")
+  server.add_insecure_port(f'[::]:{port}')
   server.start()
   try:
     while True:
@@ -177,9 +178,8 @@ if __name__ == '__main__':
   try:
     if "DISABLE_PROFILER" in os.environ:
       raise KeyError()
-    else:
-      logger.info("Profiler enabled.")
-      initStackdriverProfiling()
+    logger.info("Profiler enabled.")
+    initStackdriverProfiling()
   except KeyError:
       logger.info("Profiler disabled.")
 
@@ -187,18 +187,17 @@ if __name__ == '__main__':
   try:
     if "DISABLE_TRACING" in os.environ:
       raise KeyError()
-    else:
-      logger.info("Tracing enabled.")
-      sampler = samplers.AlwaysOnSampler()
-      exporter = stackdriver_exporter.StackdriverExporter(
-        project_id=os.environ.get('GCP_PROJECT_ID'),
-        transport=AsyncTransport)
-      tracer_interceptor = server_interceptor.OpenCensusServerInterceptor(sampler, exporter)
+    logger.info("Tracing enabled.")
+    sampler = samplers.AlwaysOnSampler()
+    exporter = stackdriver_exporter.StackdriverExporter(
+      project_id=os.environ.get('GCP_PROJECT_ID'),
+      transport=AsyncTransport)
+    tracer_interceptor = server_interceptor.OpenCensusServerInterceptor(sampler, exporter)
   except (KeyError, DefaultCredentialsError):
       logger.info("Tracing disabled.")
       tracer_interceptor = server_interceptor.OpenCensusServerInterceptor()
   except Exception as e:
       logger.warn(f"Exception on Cloud Trace setup: {traceback.format_exc()}, tracing disabled.") 
       tracer_interceptor = server_interceptor.OpenCensusServerInterceptor()
-  
+
   start(dummy_mode = True)

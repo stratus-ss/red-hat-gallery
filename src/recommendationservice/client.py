@@ -28,11 +28,7 @@ logger = getJSONLogger('recommendationservice-server')
 
 if __name__ == "__main__":
     # get port
-    if len(sys.argv) > 1:
-        port = sys.argv[1]
-    else:
-        port = "8080"
-
+    port = sys.argv[1] if len(sys.argv) > 1 else "8080"
     try:
         exporter = stackdriver_exporter.StackdriverExporter()
         tracer = Tracer(exporter=exporter)
@@ -41,7 +37,7 @@ if __name__ == "__main__":
         tracer_interceptor = client_interceptor.OpenCensusClientInterceptor()
 
     # set up server stub
-    channel = grpc.insecure_channel('localhost:'+port)
+    channel = grpc.insecure_channel(f'localhost:{port}')
     channel = grpc.intercept_channel(channel, tracer_interceptor)
     stub = demo_pb2_grpc.RecommendationServiceStub(channel)
     # form request

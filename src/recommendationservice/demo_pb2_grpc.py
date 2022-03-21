@@ -52,22 +52,16 @@ class CartServiceServicer(object):
   """
 
   def AddItem(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
   def GetCart(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
   def EmptyCart(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
@@ -120,8 +114,6 @@ class RecommendationServiceServicer(object):
   """
 
   def ListRecommendations(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
@@ -174,22 +166,16 @@ class ProductCatalogServiceServicer(object):
   """
 
   def ListProducts(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
   def GetProduct(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
   def SearchProducts(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
@@ -247,15 +233,11 @@ class ShippingServiceServicer(object):
   """
 
   def GetQuote(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
   def ShipOrder(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
@@ -308,15 +290,11 @@ class CurrencyServiceServicer(object):
   """
 
   def GetSupportedCurrencies(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
   def Convert(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
@@ -364,8 +342,6 @@ class PaymentServiceServicer(object):
   """
 
   def Charge(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
@@ -408,8 +384,6 @@ class EmailServiceServicer(object):
   """
 
   def SendOrderConfirmation(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
@@ -452,8 +426,6 @@ class CheckoutServiceServicer(object):
   """
 
   def PlaceOrder(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
@@ -496,8 +468,6 @@ class AdsServiceServicer(object):
   """
 
   def GetAds(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
