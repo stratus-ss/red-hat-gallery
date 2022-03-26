@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
 - jaeger-collector-dr.yaml
+- jaeger-netpol.yaml
 
 bases:
 - ../../base
