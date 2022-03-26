@@ -237,13 +237,70 @@ Use your browser to navigate to the Jager dashboard URL. You should be able to l
 
 ## Building application images
 
-The following command will build container images locally using Docker and push them to a container image registry. Replace the REPO_PREFIX with your registry before issuing the command:
+There are two options to build application images:
+1. Build images locally using Docker or Podman
+2. Build images using Tekton Pipelines on OpenShift
+
+### Building images locally
+
+Note that you will need a working installation of Docker or Podman on your machine. The `make-docker-images.sh` build script assumes that you have Docker installed. If you don't have Docker installed and prefer using Podman, you can create a symbolic link from docker to podman like this:
+
+```
+$ sudo ln -s /usr/bin/podman /usr/local/bin/docker
+```
+
+The following command will build container images locally and push them to a container image registry. Replace the REPO_PREFIX with your registry before issuing the command:
 
 ```
 $ TAG=latest \
   REPO_PREFIX=quay.io/noseka1/red-hat-gallery \
   ./hack/make-docker-images.sh
 ```
+### Building images using Tekton
+
+First, install OpenShift Pipelines (Tekton) using:
+
+```
+$ oc apply --kustomize red-hat-gallery/openshift-pipelines-operator/base
+```
+
+Verify that the operator is running:
+
+```
+$ oc get pod --namespace openshift-operators | grep pipelines
+openshift-pipelines-operator-6945f659f9-2lxlw   1/1     Running   0              4h28m
+```
+
+Verify that the openshift-pipelines control plane pods are running:
+
+```
+$ oc get pod --namespace openshift-pipelines
+NAME                                                 READY   STATUS    RESTARTS   AGE
+tekton-operator-proxy-webhook-697fccc9cc-b72s4       1/1     Running   0          5h2m
+tekton-pipelines-controller-65c59d7f5c-mmqph         1/1     Running   0          5h2m
+tekton-pipelines-webhook-75fff6f875-g7kfr            1/1     Running   0          5h2m
+tekton-triggers-controller-756594b64d-zc6zk          1/1     Running   0          5h1m
+tekton-triggers-core-interceptors-84bd74965b-tkqpf   1/1     Running   0          5h1m
+tekton-triggers-webhook-5d96785c49-g6j24             1/1     Running   0          5h1m
+tkn-cli-serve-f49cc4dfc-w54r4                        1/1     Running   0          5h
+```
+
+Switch to `gallery` project if not already there:
+
+```
+$ oc project gallery
+```
+
+Next, deploy Tekton pipelines for building the Gallery application images. Note that if you are deploying into a different namespace than `gallery`, you will need to update the namespace references in the manifests accordingly. Deploy pipelines for building the Gallery application images:
+
+```
+$ oc apply --kustomize red-hat-gallery/openshift-pipelines-gallery/base
+```
+
+The above command will create Tekton pipelines for building images for all the Gallery services. It will also start the pipelines immediately. The resulting images will be pushed to the OpenShift integrated registry. Note that the last step of the pipeline triggers the re-deployment of the Gallery service. This step will fail as we haven't deployed the Gallery application yet. After we deploy the Gallery application, you can re-run the pipelines and they will succeed. Note that you will need to choose workspace = VolumeClaimTemplate when re-running the pipeline. The screenshot below shows the failed pipelines due to the Gallery aplication haven't been deployed yet:
+
+![Pipelines](docs/images/gallery-pipelines.png "Pipelines")
+
 
 ## Deploying Red Hat Gallery application
 
@@ -253,11 +310,11 @@ Switch to `gallery` project if not already there:
 $ oc project gallery
 ```
 
-Generate Kubernetes manifests for deploying the application:
+Generate Kubernetes manifests for deploying the application. If you haven't pushed the images into the OpenShift integrated registry, replace the REPO_PREFIX with your registry before issuing the command:
 
 ```
 $ TAG=latest \
-  REPO_PREFIX=quay.io/noseka1/red-hat-gallery \
+  REPO_PREFIX=image-registry.openshift-image-registry.svc.cluster.local:5000/gallery \
   ./hack/make-release-artifacts.sh
 ```
 
@@ -270,7 +327,7 @@ $ oc apply --recursive --filename release/
 Verify that the application pods started successfully:
 
 ```
-$ oc get pod
+$ oc get pod -l app.kubernetes.io/managed-by!=tekton-pipelines
 NAME                                                  READY   STATUS    RESTARTS   AGE
 adservice-56479d9977-v9z6n                            2/2     Running   0          47s
 cartservice-5bdc485f66-b52cm                          2/2     Running   0          45s
