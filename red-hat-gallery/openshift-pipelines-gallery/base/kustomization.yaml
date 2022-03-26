@@ -1,0 +1,28 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: gallery
+
+resources:
+- adservice-pipelinerun.yaml
+- adservice-pipeline.yaml
+- cartservice-pipelinerun.yaml
+- cartservice-pipeline.yaml
+- checkoutservice-pipelinerun.yaml
+- checkoutservice-pipeline.yaml
+- currencyservice-pipelinerun.yaml
+- currencyservice-pipeline.yaml
+- emailservice-pipelinerun.yaml
+- emailservice-pipeline.yaml
+- frontend-pipelinerun.yaml
+- frontend-pipeline.yaml
+- loadgenerator-pipelinerun.yaml
+- loadgenerator-pipeline.yaml
+- paymentservice-pipelinerun.yaml
+- paymentservice-pipeline.yaml
+- productcatalogservice-pipelinerun.yaml
+- productcatalogservice-pipeline.yaml
+- recommendationservice-pipelinerun.yaml
+- recommendationservice-pipeline.yaml
+- shippingservice-pipelinerun.yaml
+- shippingservice-pipeline.yaml

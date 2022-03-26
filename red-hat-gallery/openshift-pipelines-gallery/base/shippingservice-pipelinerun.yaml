@@ -1,0 +1,29 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: shippingservice
+spec:
+  params:
+  - name: APP_NAME
+    value: shippingservice
+  - name: GIT_REPO
+    value: https://github.com/noseka1/red-hat-gallery
+  - name: GIT_REVISION
+    value: red-hat-gallery
+  - name: IMAGE_NAME
+    value: image-registry.openshift-image-registry.svc.cluster.local:5000/gallery/shippingservice:latest
+  - name: PATH_CONTEXT
+    value: ./src/shippingservice
+  pipelineRef:
+    name: shippingservice
+  serviceAccountName: pipeline
+  workspaces:
+  - name: workspace
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+        volumeMode: Filesystem
