@@ -1,0 +1,29 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: cartservice
+spec:
+  params:
+  - name: APP_NAME
+    value: cartservice
+  - name: GIT_REPO
+    value: https://github.com/noseka1/red-hat-gallery
+  - name: GIT_REVISION
+    value: red-hat-gallery
+  - name: IMAGE_NAME
+    value: image-registry.openshift-image-registry.svc.cluster.local:5000/gallery/cartservice:latest
+  - name: PATH_CONTEXT
+    value: ./src/cartservice/src
+  pipelineRef:
+    name: cartservice
+  serviceAccountName: pipeline
+  workspaces:
+  - name: workspace
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+        volumeMode: Filesystem
