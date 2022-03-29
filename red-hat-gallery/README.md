@@ -195,13 +195,13 @@ Use your browser to navigate to the Grafana URL. You should be able to log into 
 Retrieve the Grafana service accoung JWT token:
 
 ```
-$ oc serviceaccounts get-token grafana-serviceaccount
+$ TOKEN=`oc serviceaccounts get-token grafana-serviceaccount`
 ```
 
 Open the Grafana data source definition and insert the service account token that you obtained from the previous command:
 
 ```
-$ vi red-hat-gallery/grafana-dashboard/base/openshift-monitoring-grafanadatasource.yaml
+$ sed -i "s/<INSERT_JWT_TOKEN_HERE>/${TOKE}/g" red-hat-gallery/grafana-dashboard/base/openshift-monitoring-grafanadatasource.yaml
 ```
 
 Deploy Red Hat Gallery Grafana dashboard. Note that if you are deploying into a different namespace than `gallery`, you will need to update the namespace reference in `red-hat-gallery/grafana-dashboard/base/kustomization.yaml` and `red-hat-gallery/grafana-dashboard/base/conf/dashboard.json` accordingly. Deploy Grafana dashboard:
