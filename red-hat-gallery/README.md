@@ -444,3 +444,15 @@ $ oc set env deploy/productcatalogservice EXTRA_LATENCY-
 Red Hat Gallery comes with Prometheus alerts which will be fired if the service latency is too high:
 
 ![Alerts](docs/images/gallery-alerts.png "Alerts")
+
+
+## Uninstalling Red Hat Gallery
+
+To uninstall you need to remove the artifacts which you installed earlier:
+
+```
+oc delete cm cluster-monitoring-config -n openshift-monitoring
+oc delete project gallery gallery-smcp
+oc delete sub -n openshift-operators jaeger-product kiali-ossm servicemeshoperator
+oc get csv --all-namespaces --output custom-columns=NAMESPACE:.metadata.namespace,NAME:.metadata.name --no-headers | grep -e kiali-operator -e jaeger-operator -e servicemeshoperator| while read NS NAME; do oc delete csv --namespace $NS $NAME; done
+```
