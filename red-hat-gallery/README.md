@@ -201,7 +201,7 @@ $ TOKEN=`oc serviceaccounts get-token grafana-serviceaccount`
 Open the Grafana data source definition and insert the service account token that you obtained from the previous command:
 
 ```
-$ sed -i "s/<INSERT_JWT_TOKEN_HERE>/${TOKE}/g" red-hat-gallery/grafana-dashboard/base/openshift-monitoring-grafanadatasource.yaml
+$ sed -i "s/<INSERT_JWT_TOKEN_HERE>/${TOKEN}/g" red-hat-gallery/grafana-dashboard/base/openshift-monitoring-grafanadatasource.yaml
 ```
 
 Deploy Red Hat Gallery Grafana dashboard. Note that if you are deploying into a different namespace than `gallery`, you will need to update the namespace reference in `red-hat-gallery/grafana-dashboard/base/kustomization.yaml` and `red-hat-gallery/grafana-dashboard/base/conf/dashboard.json` accordingly. Deploy Grafana dashboard:
@@ -463,4 +463,20 @@ oc label namespace openshift-operators-redhat openshift.io/cluster-monitoring-
 oc delete sub -n openshift-operators-redhat elasticsearch-operator
 oc delete sub -n openshift-operators jaeger-product kiali-ossm servicemeshoperator
 oc get csv --all-namespaces --output custom-columns=NAMESPACE:.metadata.namespace,NAME:.metadata.name --no-headers | grep -e kiali-operator -e jaeger-operator -e servicemeshoperator| while read NS NAME; do oc delete csv --namespace $NS $NAME; done
+```
+
+You may also want to remove the `enableUserWorkload` for `openshift-monitoring`
+
+```
+(cat <<EOF
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cluster-monitoring-config
+  namespace: openshift-monitoring
+data:
+  config.yaml: |
+    enableUserWorkload: false
+EOF
+) | oc apply --filename -
 ```
