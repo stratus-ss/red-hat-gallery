@@ -274,6 +274,8 @@ $ TAG=latest \
 ```
 ### Building images using Tekton
 
+> :warning: The below instructions assume dynamic storage is available and configured in the cluster. The pipelines will hang waiting for a persistant volume which may never be created
+
 First, install OpenShift Pipelines (Tekton) using:
 
 ```
@@ -313,7 +315,11 @@ Next, deploy Tekton pipelines for building the Gallery application images. Note 
 $ oc apply --kustomize red-hat-gallery/openshift-pipelines-gallery/base
 ```
 
-The above command will create Tekton pipelines for building images for all the Gallery services. It will also start the pipelines immediately. The resulting images will be pushed to the OpenShift integrated registry. Note that the last step of the pipeline triggers the re-deployment of the Gallery service. This step will fail as we haven't deployed the Gallery application yet. After we deploy the Gallery application, you can re-run the pipelines and they will succeed. Note that you will need to choose workspace = VolumeClaimTemplate when re-running the pipeline. The screenshot below shows the failed pipelines due to the Gallery aplication haven't been deployed yet:
+The above command will create Tekton pipelines for building images for all the Gallery services. It will also start the pipelines immediately. The resulting images will be pushed to the OpenShift integrated registry. 
+
+> :warning: Note that the last step of the pipeline triggers the re-deployment of the Gallery service. This step will fail as we haven't deployed the Gallery application yet. After we deploy the Gallery application, you can re-run the pipelines and they will succeed. Note that you will need to choose workspace = VolumeClaimTemplate when re-running the pipeline. 
+
+The screenshot below shows the failed pipelines due to the Gallery aplication haven't been deployed yet:
 
 ![Pipelines](docs/images/gallery-pipelines.png "Pipelines")
 
@@ -461,6 +467,7 @@ oc label namespace openshift-operators-redhat openshift.io/cluster-monitoring-
 # Be careful removing the elasticsearch operator if you have relied on this somewhere else in the cluster!
 #####
 oc delete sub -n openshift-operators-redhat elasticsearch-operator
+oc delete sub openshift-pipelines-operator
 oc delete sub -n openshift-operators jaeger-product kiali-ossm servicemeshoperator
 oc get csv --all-namespaces --output custom-columns=NAMESPACE:.metadata.namespace,NAME:.metadata.name --no-headers | grep -e kiali-operator -e jaeger-operator -e servicemeshoperator| while read NS NAME; do oc delete csv --namespace $NS $NAME; done
 ```
