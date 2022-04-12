@@ -7,7 +7,7 @@ spec:
   - name: APP_NAME
     value: shippingservice
   - name: GIT_REPO
-    value: https://github.com/noseka1/red-hat-gallery
+    value: https://github.com/stratus-ss/red-hat-gallery
   - name: GIT_REVISION
     value: red-hat-gallery
   - name: IMAGE_NAME
