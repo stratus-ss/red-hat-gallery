@@ -183,6 +183,9 @@ Deploy Grafana instance into the `gallery` namespace. Note that if you are deplo
 $ oc apply --kustomize red-hat-gallery/grafana-instance/overlays/service-mesh
 ```
 
+> :warning: Read the output! There are times where not all items will be created on the first run of the command. Simply re-running the command can solve this. Items that have been already created will show as `unchanged`
+
+
 Obtain the Grafana URL:
 
 ```
@@ -269,9 +272,47 @@ The following command will build container images locally and push them to a con
 
 ```
 $ TAG=latest \
-  REPO_PREFIX=quay.io/noseka1/red-hat-gallery \
+  REPO_PREFIX=quay.io/sovens \
   ./hack/make-docker-images.sh
 ```
+
+
+Generate Kubernetes manifests for deploying the application:
+
+```
+$ TAG=latest \
+  REPO_PREFIX=quay.io/sovens \
+  ./hack/make-release-artifacts.sh
+```
+
+Deploy the generated manifests to OpenShift:
+
+```
+$ oc apply --recursive --filename release/
+```
+
+Verify that the application pods started successfully:
+
+```
+$ oc get pod
+NAME                                                  READY   STATUS    RESTARTS   AGE
+adservice-56479d9977-v9z6n                            2/2     Running   0          47s
+cartservice-5bdc485f66-b52cm                          2/2     Running   0          45s
+checkoutservice-89b9b8685-8p9vj                       2/2     Running   0          46s
+currencyservice-74f45d7f79-v529b                      2/2     Running   0          45s
+emailservice-66996d454f-zqmnw                         2/2     Running   0          44s
+frontend-7b5dc7bb96-tzn8s                             2/2     Running   0          46s
+grafana-deployment-fcc844f68-96xm4                    2/2     Running   0          2m14s
+grafana-operator-controller-manager-bbff97cc6-tpzzq   2/2     Running   0          5m46s
+jaeger-684974d5d8-tvmtj                               2/2     Running   0          2m13s
+loadgenerator-57cd859465-js97k                        2/2     Running   0          47s
+paymentservice-754d5f79c9-jdt6b                       2/2     Running   0          47s
+productcatalogservice-5ff9fb974f-kswx9                2/2     Running   0          47s
+recommendationservice-844d54dc7-sh2cq                 2/2     Running   0          46s
+redis-cart-5c458f56bc-z7m95                           2/2     Running   0          45s
+shippingservice-78d5bf9ff7-7cqgr                      2/2     Running   0          47s
+```
+
 ### Building images using Tekton
 
 > :warning: The below instructions assume dynamic storage is available and configured in the cluster. The pipelines will hang waiting for a persistant volume which may never be created
@@ -324,7 +365,7 @@ The screenshot below shows the failed pipelines due to the Gallery aplication ha
 ![Pipelines](docs/images/gallery-pipelines.png "Pipelines")
 
 
-## Deploying Red Hat Gallery application
+### Deploying Red Hat Gallery application (After Pipeline Succeeds)
 
 Switch to `gallery` project if not already there:
 
