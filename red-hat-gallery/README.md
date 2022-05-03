@@ -365,7 +365,7 @@ The screenshot below shows the failed pipelines due to the Gallery aplication ha
 ![Pipelines](docs/images/gallery-pipelines.png "Pipelines")
 
 
-### Deploying Red Hat Gallery application (After Pipeline Succeeds)
+### Deploying Red Hat Gallery application (After Pipeline Are Created)
 
 Switch to `gallery` project if not already there:
 
@@ -386,6 +386,13 @@ Deploy the generated manifests to OpenShift:
 ```
 $ oc apply --recursive --filename release/
 ```
+
+After the manifests have been created you need to restart the Pipelines with the VolumeClaimTemplate
+
+![image](https://user-images.githubusercontent.com/8162705/166554103-fc995279-de93-460c-9238-a762efbba9d0.png)
+
+
+After all of the builds have succeeded the pods should end in a `Running` state.
 
 Verify that the application pods started successfully:
 
