@@ -198,13 +198,13 @@ Use your browser to navigate to the Grafana URL. You should be able to log into 
 Retrieve the Grafana service accoung JWT token:
 
 ```
-$ TOKEN=`oc serviceaccounts get-token grafana-serviceaccount`
+$ TOKEN=$(oc serviceaccounts get-token grafana-serviceaccount)
 ```
 
 Open the Grafana data source definition and insert the service account token that you obtained from the previous command:
 
 ```
-$ sed -i "s/<INSERT_JWT_TOKEN_HERE>/${TOKEN}/g" red-hat-gallery/grafana-dashboard/base/openshift-monitoring-grafanadatasource.yaml
+$ sed -i "s#<INSERT_JWT_TOKEN_HERE>#${TOKEN}#g" red-hat-gallery/grafana-dashboard/base/openshift-monitoring-grafanadatasource.yaml
 ```
 
 Deploy Red Hat Gallery Grafana dashboard. Note that if you are deploying into a different namespace than `gallery`, you will need to update the namespace reference in `red-hat-gallery/grafana-dashboard/base/kustomization.yaml` and `red-hat-gallery/grafana-dashboard/base/conf/dashboard.json` accordingly. Deploy Grafana dashboard:
@@ -272,7 +272,7 @@ The following command will build container images locally and push them to a con
 
 ```
 $ TAG=latest \
-  REPO_PREFIX=quay.io/sovens \
+  REPO_PREFIX=quay.io/red-hat-gallery \
   ./hack/make-docker-images.sh
 ```
 
@@ -281,7 +281,7 @@ Generate Kubernetes manifests for deploying the application:
 
 ```
 $ TAG=latest \
-  REPO_PREFIX=quay.io/sovens \
+  REPO_PREFIX=quay.io/red-hat-gallery \
   ./hack/make-release-artifacts.sh
 ```
 
@@ -315,7 +315,7 @@ shippingservice-78d5bf9ff7-7cqgr                      2/2     Running   0       
 
 ### Building images using Tekton
 
-> :warning: The below instructions assume dynamic storage is available and configured in the cluster. The pipelines will hang waiting for a persistant volume which may never be created
+> :warning: The below instructions assume dynamic storage is available and configured in the cluster. The pipelines will hang waiting for a persistent volume which may never be created
 
 First, install OpenShift Pipelines (Tekton) using:
 
