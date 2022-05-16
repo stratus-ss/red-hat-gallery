@@ -9,7 +9,7 @@ spec:
     default: paymentservice
   - name: GIT_REPO
     type: string
-    default: https://github.com/stratus-ss/red-hat-gallery
+    default: https://github.com/noseka1/red-hat-gallery
   - name: GIT_REVISION
     type: string
     default: red-hat-gallery

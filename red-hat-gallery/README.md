@@ -505,19 +505,19 @@ Red Hat Gallery comes with Prometheus alerts which will be fired if the service 
 To uninstall you need to remove the artifacts which you installed earlier:
 
 ```
-oc delete cm cluster-monitoring-config -n openshift-monitoring
-oc delete project gallery gallery-smcp
-oc delete og openshift-cluster-monitoring -n openshift-monitoring
-oc delete og openshift-operators-redhat -n openshift-operators-redhat
-oc label namespace openshift-operators-redhat openshift.io/cluster-monitoring-
+$ oc delete cm cluster-monitoring-config -n openshift-monitoring
+$ oc delete project gallery gallery-smcp
+$ oc delete og openshift-cluster-monitoring -n openshift-monitoring
+$ oc delete og openshift-operators-redhat -n openshift-operators-redhat
+$ oc label namespace openshift-operators-redhat openshift.io/cluster-monitoring-
 
 #####
 # Be careful removing the elasticsearch operator if you have relied on this somewhere else in the cluster!
 #####
-oc delete sub -n openshift-operators-redhat elasticsearch-operator
-oc delete sub openshift-pipelines-operator
-oc delete sub -n openshift-operators jaeger-product kiali-ossm servicemeshoperator
-oc get csv --all-namespaces --output custom-columns=NAMESPACE:.metadata.namespace,NAME:.metadata.name --no-headers | grep -e kiali-operator -e jaeger-operator -e servicemeshoperator| while read NS NAME; do oc delete csv --namespace $NS $NAME; done
+$ oc delete sub -n openshift-operators-redhat elasticsearch-operator
+$ oc delete sub openshift-pipelines-operator
+$ oc delete sub -n openshift-operators jaeger-product kiali-ossm servicemeshoperator
+$ oc get csv --all-namespaces --output custom-columns=NAMESPACE:.metadata.namespace,NAME:.metadata.name --no-headers | grep -e kiali-operator -e jaeger-operator -e servicemeshoperator| while read NS NAME; do oc delete csv --namespace $NS $NAME; done
 ```
 
 You may also want to remove the `enableUserWorkload` for `openshift-monitoring`
