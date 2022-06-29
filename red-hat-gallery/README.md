@@ -195,7 +195,7 @@ https://grafana-route-gallery.apps.mycluster.example.com
 
 Use your browser to navigate to the Grafana URL. You should be able to log into Grafana using the login with OpenShift. There are no dashboards available in Grafana at this moment. We are going to deploy the application dashboard in just a little bit.
 
-Retrieve the Grafana service accoung JWT token:
+Retrieve the Grafana service account JWT token:
 
 ```
 $ TOKEN=$(oc serviceaccounts get-token grafana-serviceaccount)
