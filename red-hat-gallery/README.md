@@ -177,7 +177,7 @@ Deploy Grafana operator into the `gallery` namespace. Note that if you are deplo
 $ oc apply --kustomize red-hat-gallery/grafana-operator/base
 ```
 
-Deploy Grafana instance into the `gallery` namespace. Note that if you are deploying into a different OpenShift namespace than `gallery`, you will need to update the namespace reference in `red-hat-gallery/grafana-instance/base/kustomization.yaml` accordingly. Deploy Grafana instance:
+Next, deploy a grafana instance to accept ingress router traffic to hit Grafana
 
 ```
 $ oc apply --kustomize red-hat-gallery/grafana-instance/overlays/service-mesh
