@@ -177,7 +177,7 @@ Deploy Grafana operator into the `gallery` namespace. Note that if you are deplo
 $ oc apply --kustomize red-hat-gallery/grafana-operator/base
 ```
 
-Deploy Grafana instance into the `gallery` namespace. Note that if you are deploying into a different OpenShift namespace than `gallery`, you will need to update the namespace reference in `red-hat-gallery/grafana-instance/base/kustomization.yaml` accordingly. Deploy Grafana instance:
+Deploy Grafana instance into the `gallery` namespace to allow ingress router traffic to hit Grafana. Note that if you are deploying into a different OpenShift namespace than `gallery`, you will need to update the namespace reference in `red-hat-gallery/grafana-instance/base/kustomization.yaml` accordingly.
 
 ```
 $ oc apply --kustomize red-hat-gallery/grafana-instance/overlays/service-mesh
@@ -195,7 +195,7 @@ https://grafana-route-gallery.apps.mycluster.example.com
 
 Use your browser to navigate to the Grafana URL. You should be able to log into Grafana using the login with OpenShift. There are no dashboards available in Grafana at this moment. We are going to deploy the application dashboard in just a little bit.
 
-Retrieve the Grafana service accoung JWT token:
+Retrieve the Grafana service account JWT token:
 
 ```
 $ TOKEN=$(oc serviceaccounts get-token grafana-serviceaccount)
@@ -358,11 +358,7 @@ $ oc apply --kustomize red-hat-gallery/openshift-pipelines-gallery/base
 
 The above command will create Tekton pipelines for building images for all the Gallery services. It will also start the pipelines immediately. The resulting images will be pushed to the OpenShift integrated registry.
 
-> :warning: Note that the last step of the pipeline triggers the re-deployment of the Gallery service. This step will fail as we haven't deployed the Gallery application yet. After we deploy the Gallery application, you can re-run the pipelines and they will succeed. Note that you will need to choose workspace = VolumeClaimTemplate when re-running the pipeline.
-
-The screenshot below shows the failed pipelines due to the Gallery aplication haven't been deployed yet:
-
-![Pipelines](docs/images/gallery-pipelines.png "Pipelines")
+> :warning: Note that the last step of the pipeline triggers the re-deployment of the Gallery service. This step will fail as we haven't deployed the Gallery application yet. After we deploy the Gallery application, you can re-run the pipelines and they will succeed.
 
 
 ### Deploying Red Hat Gallery application (After Pipeline Are Created)
@@ -372,7 +368,7 @@ Switch to `gallery` project if not already there:
 ```
 $ oc project gallery
 ```
-
+ 
 Generate Kubernetes manifests for deploying the application. If you haven't pushed the images into the OpenShift integrated registry, replace the REPO_PREFIX with your registry before issuing the command:
 
 ```
@@ -387,10 +383,21 @@ Deploy the generated manifests to OpenShift:
 $ oc apply --recursive --filename release/
 ```
 
-After the manifests have been created you need to restart the Pipelines with the VolumeClaimTemplate
+If the pipeline fails, you can relaunch it, ensuring that the VolumeClaimTemplates are used. To do so, use the elysis beside the pipeline that needs to be restarted:
 
-![image](https://user-images.githubusercontent.com/8162705/166554103-fc995279-de93-460c-9238-a762efbba9d0.png)
+![Elypsis](docs/images/pipelines_elypsis.png "Elypsis")
 
+Click the Start button:
+
+![Elypsis2](docs/images/pipelines_elypsis_2.png "Elypsis2")
+
+Then finally, under the *Workspaces* drop down, select VolumeClaimTemplate:
+
+![VolumeTemplate](docs/images/pipeline_volumeTemplate.png "VolumeTemplate")
+
+The screenshot below shows the failed pipelines due to the Gallery aplication haven't been deployed yet:
+
+![Pipelines](docs/images/gallery-pipelines.png "Pipelines")
 
 After all of the builds have succeeded the pods should end in a `Running` state.
 
