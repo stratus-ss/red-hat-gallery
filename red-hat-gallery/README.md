@@ -358,7 +358,19 @@ $ oc apply --kustomize red-hat-gallery/openshift-pipelines-gallery/base
 
 The above command will create Tekton pipelines for building images for all the Gallery services. It will also start the pipelines immediately. The resulting images will be pushed to the OpenShift integrated registry. 
 
-> :warning: Note that the last step of the pipeline triggers the re-deployment of the Gallery service. This step will fail as we haven't deployed the Gallery application yet. After we deploy the Gallery application, you can re-run the pipelines and they will succeed. Note that you will need to choose workspace = VolumeClaimTemplate when re-running the pipeline. 
+> :warning: Note that the last step of the pipeline triggers the re-deployment of the Gallery service. This step will fail as we haven't deployed the Gallery application yet. After we deploy the Gallery application, you can re-run the pipelines and they will succeed.
+
+If the pipeline fails, you can relaunch it, ensuring that the VolumeClaimTemplates are used. To do so, use the elysis beside the pipeline that needs to be restarted:
+
+![Elypsis](docs/images/pipelines_elypsis.png "Elypsis")
+
+Click the Start button:
+
+![Elypsis2](docs/images/pipelines_elypsis_2.png "Elypsis2")
+
+Then finally, under the *Workspaces* drop down, select VolumeClaimTemplate:
+
+![VolumeTemplate](docs/images/pipeline_volumeTemplate.png "VolumeTemplate")
 
 The screenshot below shows the failed pipelines due to the Gallery aplication haven't been deployed yet:
 
