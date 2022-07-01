@@ -360,21 +360,7 @@ The above command will create Tekton pipelines for building images for all the G
 
 > :warning: Note that the last step of the pipeline triggers the re-deployment of the Gallery service. This step will fail as we haven't deployed the Gallery application yet. After we deploy the Gallery application, you can re-run the pipelines and they will succeed.
 
-If the pipeline fails, you can relaunch it, ensuring that the VolumeClaimTemplates are used. To do so, use the elysis beside the pipeline that needs to be restarted:
 
-![Elypsis](docs/images/pipelines_elypsis.png "Elypsis")
-
-Click the Start button:
-
-![Elypsis2](docs/images/pipelines_elypsis_2.png "Elypsis2")
-
-Then finally, under the *Workspaces* drop down, select VolumeClaimTemplate:
-
-![VolumeTemplate](docs/images/pipeline_volumeTemplate.png "VolumeTemplate")
-
-The screenshot below shows the failed pipelines due to the Gallery aplication haven't been deployed yet:
-
-![Pipelines](docs/images/gallery-pipelines.png "Pipelines")
 
 
 ### Deploying Red Hat Gallery application (After Pipeline Are Created)
@@ -399,10 +385,21 @@ Deploy the generated manifests to OpenShift:
 $ oc apply --recursive --filename release/
 ```
 
-After the manifests have been created you need to restart the Pipelines with the VolumeClaimTemplate
+If the pipeline fails, you can relaunch it, ensuring that the VolumeClaimTemplates are used. To do so, use the elysis beside the pipeline that needs to be restarted:
 
-![image](https://user-images.githubusercontent.com/8162705/166554103-fc995279-de93-460c-9238-a762efbba9d0.png)
+![Elypsis](docs/images/pipelines_elypsis.png "Elypsis")
 
+Click the Start button:
+
+![Elypsis2](docs/images/pipelines_elypsis_2.png "Elypsis2")
+
+Then finally, under the *Workspaces* drop down, select VolumeClaimTemplate:
+
+![VolumeTemplate](docs/images/pipeline_volumeTemplate.png "VolumeTemplate")
+
+The screenshot below shows the failed pipelines due to the Gallery aplication haven't been deployed yet:
+
+![Pipelines](docs/images/gallery-pipelines.png "Pipelines")
 
 After all of the builds have succeeded the pods should end in a `Running` state.
 
