@@ -255,15 +255,15 @@ $ sudo ln -s /usr/bin/podman /usr/local/bin/docker
 The following command will build container images locally and push them to a container image registry. Replace the REPO_PREFIX with your registry before issuing the command:
 
 > :warning: If building the images yourself, you need to insure that the following repos exist before running the below command:
-> ```adservice    
+> ```adservice
 > cartservice
-> checkoutservice  
+> checkoutservice
 > currencyservice
-> emailservice  
+> emailservice
 > frontend
-> loadgenerator   
+> loadgenerator
 > paymentservice
-> productcatalogservice  
+> productcatalogservice
 > recommendationservice
 > shippingservice
 > ```
@@ -356,11 +356,9 @@ Next, deploy Tekton pipelines for building the Gallery application images. Note 
 $ oc apply --kustomize red-hat-gallery/openshift-pipelines-gallery/base
 ```
 
-The above command will create Tekton pipelines for building images for all the Gallery services. It will also start the pipelines immediately. The resulting images will be pushed to the OpenShift integrated registry. 
+The above command will create Tekton pipelines for building images for all the Gallery services. It will also start the pipelines immediately. The resulting images will be pushed to the OpenShift integrated registry.
 
 > :warning: Note that the last step of the pipeline triggers the re-deployment of the Gallery service. This step will fail as we haven't deployed the Gallery application yet. After we deploy the Gallery application, you can re-run the pipelines and they will succeed.
-
-
 
 
 ### Deploying Red Hat Gallery application (After Pipeline Are Created)
@@ -370,7 +368,7 @@ Switch to `gallery` project if not already there:
 ```
 $ oc project gallery
 ```
-
+ 
 Generate Kubernetes manifests for deploying the application. If you haven't pushed the images into the OpenShift integrated registry, replace the REPO_PREFIX with your registry before issuing the command:
 
 ```
@@ -532,7 +530,7 @@ $ oc get csv --all-namespaces --output custom-columns=NAMESPACE:.metadata.namesp
 You may also want to remove the `enableUserWorkload` for `openshift-monitoring`
 
 ```
-(cat <<EOF
+$ (cat <<EOF
 apiVersion: v1
 kind: ConfigMap
 metadata:
