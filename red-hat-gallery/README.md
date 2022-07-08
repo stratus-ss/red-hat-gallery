@@ -1,4 +1,17 @@
 # Red Hat Gallery
+## Overview
+
+This application is a fork of a Google designed demo-shop which is used to demonstrate microservices and the appropriate use of several technologies. This fork uses OpenShift Pipelines (Tekton), Istio, Kiali, Jaeger and other tools in order to create a Red Hat themed shop for demonstration purposes. While no products are actually shipped or sold, this application can be used to walk through several components of a microservices architecture including gathering and analyzing metrics as well as visualizing the data through Grafana.
+
+In order to deploy this project, it is intended that you have:
+
+* An OpenShift 4.7+ cluster
+* Cluster Admin rights on the cluster
+* A host which can reach the routes produced by OpenShift (so you can actually interact with the application)
+* A Backend with dynamic storage (although if you wish to create PVs and the matching PVCs it could be done manually)
+* If you choose to build the containers locally, you will need a few GB of hard drive space to build all of the images yourself
+* At least some experience troubleshooting/administering Kubernetes or OpenShift
+
 
 ## Deployment diagram
 
@@ -387,13 +400,11 @@ If the pipeline fails, you can relaunch it, ensuring that the VolumeClaimTemplat
 
 ![Elypsis](docs/images/pipelines_elypsis.png "Elypsis")
 
-Click the Start button:
+Click the Start Last Run button:
 
 ![Elypsis2](docs/images/pipelines_elypsis_2.png "Elypsis2")
 
-Then finally, under the *Workspaces* drop down, select VolumeClaimTemplate:
-
-![VolumeTemplate](docs/images/pipeline_volumeTemplate.png "VolumeTemplate")
+This should restart the previous Run with the VolumeClaimTemplate that is required to interface with the storage drivers in OpenShift.
 
 The screenshot below shows the failed pipelines due to the Gallery aplication haven't been deployed yet:
 
